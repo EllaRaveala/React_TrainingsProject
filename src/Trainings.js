@@ -24,21 +24,6 @@ class Trainings extends Component{
     })
   }
 
-  addTraining =(newTraining)=>{
-    fetch('https://customerrest.herokuapp.com/api/trainings',
-      {
-        method: 'POST',
-        headers:{
-          'Content-type':'application/json'
-        },
-        body: JSON.stringify(newTraining)
-      })
-      .then(res=> this.fetchTrainings())
-      .then(res=>this.setState({message: 'Training saved'}))
-      .then(res=>this.setState({open: true}))
-      .catch(err=> console.error(err))
-  }
-
 
   render() {
 
@@ -64,21 +49,10 @@ class Trainings extends Component{
             accessor: 'duration',
             width: 270
           },
-          {
-            sortable: false,
-            filterable: false,
-            width: 100,
-            Cell: row => <AddTraining addTraining={this.addTraining} training={row.original}/>
-          },
         ]
   return(
     <div>
-    <Grid container>
-      <Grid item>
-          <AddTraining addTraining={this.addTraining}/>
-      </Grid>
-    </Grid>
-    <ReactTable data={this.state.trainings} columns={columns} filterable={true} sortable='true' defaultPageSize='10' align="center" />
+      <ReactTable data={this.state.trainings} columns={columns} filterable={true} sortable='true' defaultPageSize='10' align="center" />
     </div>
     )
       };

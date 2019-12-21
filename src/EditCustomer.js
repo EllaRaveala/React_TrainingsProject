@@ -36,7 +36,7 @@ class EditCustomer extends Component{
           };
 
     handleInputChange = (event)=> {
-            this.setState({...this.state.customer, [event.target.name]: event.target.value});
+            this.setState({customer: {...this.state.customer, [event.target.name]: event.target.value}});
         }
         
     updateCustomer = () =>{

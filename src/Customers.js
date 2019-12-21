@@ -5,6 +5,7 @@ import EditCustomer from './EditCustomer';
 import AddCustomer from './AddCustomer';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/grid';
+import AddTraining from './AddTraining';
 
 class Customers extends Component{
 
@@ -68,6 +69,21 @@ saveCustomer =(newCustomer)=>{
 
   }
 
+  addTraining =(newTraining)=>{
+    fetch('https://customerrest.herokuapp.com/api/trainings',
+      {
+        method: 'POST',
+        headers:{
+          'Content-type':'application/json'
+        },
+        body: JSON.stringify(newTraining)
+      })
+      .then(res=> this.fetchTrainings())
+      .then(res=>this.setState({message: 'Training saved'}))
+      .then(res=>this.setState({open: true}))
+      .catch(err=> console.error(err))
+  }
+
 
 render() {
 
@@ -85,7 +101,7 @@ render() {
         {
           Header: 'Streetaddress',
           accessor: 'streetaddress',
-          width: 200
+          width: 170
         },
         {
           Header: 'Postcode',
@@ -95,7 +111,7 @@ render() {
         {
           Header: 'City',
           accessor: 'city',
-          width: 100
+          width: 120
         },
         {
           Header: 'Email',
@@ -105,21 +121,27 @@ render() {
         {
           Header: 'Phone',
           accessor: 'phone',
-          width: 150
+          width: 130
         },
        {
           sortable: false,
           filterable: false,
-          width: 100,
+          width: 70,
           Cell: row => <EditCustomer updateCustomer={this.updateCustomer} customer={row.original}/>
         },
         {
           sortable: false,
           filterable: false,
-          width: 100,
+          width:80,
           accessor: 'links[1].href',
           Cell: ({value})=> <Button size="small" color="secondary" onClick={()=>this.deleteCustomer(value)}>Delete</Button>
         },  
+        {
+          sortable: false,
+          filterable: false,
+          width: 120,
+          Cell: row => <AddTraining addTraining={this.addTraining} training={row.original}/>
+        },
       ]
 
       return(
